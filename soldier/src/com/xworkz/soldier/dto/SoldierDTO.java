@@ -17,7 +17,7 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SoldierDTO extends AbstractAuidDTO {
+public class SoldierDTO extends AbstractAuditDTO{
 	
 	@NotNull
 	@NotBlank

@@ -3,7 +3,7 @@ package com.xworkz.soldier.dto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public abstract class AbstractAuidDTO implements Serializable  {
+public abstract class AbstractAuditDTO implements Serializable  {
 	
 	private String createdBy;
 	private LocalDateTime createdDate;
