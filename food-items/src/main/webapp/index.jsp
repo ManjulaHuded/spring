@@ -16,6 +16,7 @@
     <img src="https://www.x-workz.in/static/media/Logo.cf195593dc1b3f921369.png" height="48" width="80" ></a>
     <div class="d-flex">
       <a href="fooditem.jsp" class="form-control me-2">FoodItem</a>
+      <a href="Interview.jsp" class="form-control me-2">Interview</a>
     </div>
   </div>
 </nav>
