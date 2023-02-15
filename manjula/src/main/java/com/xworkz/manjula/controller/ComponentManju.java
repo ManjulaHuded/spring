@@ -164,7 +164,8 @@ public class ComponentManju {
 	@GetMapping("/chat")
 	public String getChat(Model ref) {
 		System.out.println("Runnning getChat...");
-		ChatDTO chatDTO = new ChatDTO();
+		ChatDTO
+		chatDTO = new ChatDTO();
 		chatDTO.setChatShopName("Bangarpete chat shop");
 		chatDTO.setChatName("Panipuri");
 		chatDTO.setNoOfPiece(6);
