@@ -36,7 +36,7 @@
 	
 	<form action="search" method="get">
 	Search By Id<input type="text" name="id"/>
-	<input type="submit" value="Search"/>
+	<input type="submit" value="Search" class="btn btn-dark"/>
 	</form>
 	
 	<div>

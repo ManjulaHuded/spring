@@ -27,6 +27,7 @@
 			<div>
 			<a href="past">Pastries</a>
 			<a href="SearchPastries.jsp">PastriesSearch</a>
+			<a href="SearchColor.jsp">SearchColor</a>
 			</div>
 		</div>
 	</nav>

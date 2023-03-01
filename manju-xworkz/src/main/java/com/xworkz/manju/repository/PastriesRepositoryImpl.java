@@ -1,8 +1,11 @@
 package com.xworkz.manju.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -10,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.xworkz.manju.entity.PastriesEntity;
 
 @Repository
-public class PastriesRepositoryImpl implements RepositoryPastries {
+public class PastriesRepositoryImpl implements PastriesRepository {
 
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
@@ -39,6 +42,39 @@ public class PastriesRepositoryImpl implements RepositoryPastries {
 		PastriesEntity entity = manager.find(PastriesEntity.class, id);
 		manager.close();
 		return entity;
+	}
+
+	@Override
+	public List<PastriesEntity> findByColor(String color) {
+		System.out.println("Running findByColor in repoo " + color);
+		EntityManager manager = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = manager.createNamedQuery("findByColor");
+			query.setParameter("col", color);
+			List<PastriesEntity> list = query.getResultList();
+			System.out.println("Total list found in repo.." + list.size());
+			return list;
+		} finally {
+			manager.close();
+		}
+		
+
+	}
+
+	@Override
+	public boolean update(PastriesEntity entity) {
+		System.out.println("Running update method in repo..");
+		EntityManager manager = this.entityManagerFactory.createEntityManager();
+		try {
+			EntityTransaction transaction = manager.getTransaction();
+			transaction.begin();
+			manager.merge(entity);
+			transaction.commit();
+			return true;
+		} finally {
+
+			manager.close();
+		}
 	}
 
 }

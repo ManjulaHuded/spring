@@ -73,4 +73,37 @@ public class ControllerPastries {
 
 	}
 
+	@GetMapping("/searchByColor")
+	public String onSearchByColor(@RequestParam String color, Model model) {
+		System.out.println("Running onSearchColor in controller" + color);
+		List<PastriesDTO> list = this.pastriesService.findByColor(color);
+		model.addAttribute("list", list);
+
+		return "SearchColor";
+
+	}
+
+	@GetMapping("/update")
+	public String onUpdate(@RequestParam int id, Model model) {
+		System.out.println("Running  onUpdate in get method.." + id);
+		PastriesDTO dto = this.pastriesService.findById(id);
+		model.addAttribute("dto", dto);
+		model.addAttribute("types", types);
+		model.addAttribute("flavours", flavours);
+		return "UpdatePastries";
+
+	}
+
+	@PostMapping("/update")
+	public String onUpdate(PastriesDTO dto, Model model) {
+		System.out.println("Running onUpdate in post method" + dto);
+		Set<ConstraintViolation<PastriesDTO>> violations = this.pastriesService.validateAndUpdate(dto);
+		if(violations.size()>0) {
+			model.addAttribute("error", violations);
+			
+		}else {
+			model.addAttribute("message", "Pastries updated SuccessFully..");
+		}
+		return "UpdatePastries";
+	}
 }

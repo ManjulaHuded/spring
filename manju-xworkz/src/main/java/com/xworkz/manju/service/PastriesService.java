@@ -1,5 +1,6 @@
 package com.xworkz.manju.service;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -15,4 +16,9 @@ public interface PastriesService {
 
 	}
 
+	default List<PastriesDTO> findByColor(String color) {
+		return null;
+	}
+
+	Set<ConstraintViolation<PastriesDTO>> validateAndUpdate(PastriesDTO dto);
 }
