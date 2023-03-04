@@ -92,7 +92,7 @@ public class PastriesServiceImpl implements PastriesService {
 				dto.setFlavour(entity.getFlavour());
 				listOfDto.add(dto);// adding to list
 			}
-			System.out.println("Size os dto" + listOfDto.size());
+			System.out.println("Size of dto" + listOfDto.size());
 			System.out.println("Size of entities" + entities.size());
 			return listOfDto;
 
@@ -121,11 +121,23 @@ public class PastriesServiceImpl implements PastriesService {
 			entity.setType(dto.getType());
 			entity.setFlavour(dto.getFlavour());
 			boolean update = this.repositoryPastries.update(entity);
-			System.out.println("Data is updated"+update);
+			System.out.println("Data is updated" + update);
 			return Collections.emptySet();
 
 		}
 
+	}
+
+	@Override
+	public boolean validateAndDelete(int id) {
+		System.out.println("Running validateAndDelete in service.." + id);
+		if (id < 0) {
+			return false;
+		} else {
+			boolean delete = this.repositoryPastries.delete(id);
+			System.out.println("Deleted" + delete);
+			return delete;
+		}
 	}
 
 }

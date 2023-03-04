@@ -57,7 +57,6 @@ public class PastriesRepositoryImpl implements PastriesRepository {
 		} finally {
 			manager.close();
 		}
-		
 
 	}
 
@@ -73,6 +72,22 @@ public class PastriesRepositoryImpl implements PastriesRepository {
 			return true;
 		} finally {
 
+			manager.close();
+		}
+	}
+
+	@Override
+	public boolean delete(int id) {
+		System.out.println("Running delete in repo..");
+		EntityManager manager = this.entityManagerFactory.createEntityManager();
+		try {
+			EntityTransaction transaction = manager.getTransaction();
+			PastriesEntity entity = manager.find(PastriesEntity.class, id);
+			transaction.begin();
+			manager.remove(entity);
+			transaction.commit();
+			return true;
+		} finally {
 			manager.close();
 		}
 	}

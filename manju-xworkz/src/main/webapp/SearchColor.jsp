@@ -50,6 +50,7 @@
 			<th>Type</th>
 			<th>Flavour</th>
 			<th>Edit</th>
+			<th>Delete</th>
 		</tr>
 		<c:forEach items="${list }" var="p">
 			<tr>
@@ -60,6 +61,7 @@
 				<td>${p.type }</td>
 				<td>${p.flavour }</td>
 				<td><a href="update?id=${p.id }">Edit</a></td>
+				<td><a href="delete?id=${p.id }" class="btn btn-danger">Delete</a></td>
 			</tr>
 		</c:forEach>
 	</table>

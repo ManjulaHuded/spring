@@ -9,6 +9,7 @@ public interface PastriesRepository {
 
 	boolean save(PastriesEntity entity);
 	boolean update(PastriesEntity entity);
+	boolean delete(int id);
 
 	default PastriesEntity findById(int id) {
 		return null;

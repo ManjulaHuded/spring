@@ -21,4 +21,6 @@ public interface PastriesService {
 	}
 
 	Set<ConstraintViolation<PastriesDTO>> validateAndUpdate(PastriesDTO dto);
+	
+	boolean validateAndDelete(int id);
 }

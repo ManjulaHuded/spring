@@ -98,12 +98,28 @@ public class ControllerPastries {
 	public String onUpdate(PastriesDTO dto, Model model) {
 		System.out.println("Running onUpdate in post method" + dto);
 		Set<ConstraintViolation<PastriesDTO>> violations = this.pastriesService.validateAndUpdate(dto);
-		if(violations.size()>0) {
+		if (violations.size() > 0) {
 			model.addAttribute("error", violations);
-			
-		}else {
+
+		} else {
 			model.addAttribute("message", "Pastries updated SuccessFully..");
 		}
 		return "UpdatePastries";
 	}
+
+	@GetMapping("/delete")
+	public String onDelete(@RequestParam int id, Model model) {
+		System.out.println("Running onDelete in post method" + id);
+		boolean delete = this.pastriesService.validateAndDelete(id);
+		if (delete = true) {
+			System.out.println("deleted data of :" + id);
+			model.addAttribute("delete", "Deleted successfully : ID :");
+			model.addAttribute("id", id);
+		} else {
+			model.addAttribute("notDeleted", "Id not found");
+		}
+		return "SearchColor";
+
+	}
+
 }
