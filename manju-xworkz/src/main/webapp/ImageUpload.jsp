@@ -24,15 +24,20 @@
 				src="https://www.x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
 				height="48" width="80">
 			<div class="d-flex"></div>
-			<div>
-			<a href="past">Pastries</a>
-			<a href="SearchPastries.jsp">PastriesSearch</a>
-			<a href="SearchColor.jsp">SearchColor</a>
-			<a href="ImageUpload.jsp">ImageUpload</a>
-			</div>
+			<a href="index.jsp">Home</a>
 		</div>
 	</nav>
 
-	<h4>Welcome to Pastries..</h4>
-	</body>
+	<h4>Upload image Test</h4>
+	
+	
+	<div><span style="color:green">${message }</span></div>
+	
+	<form action="upload" method="post" enctype="multipart/form-data">
+	Upload:<input type="file" name="chitra"/>
+	<input type="submit" value="Upload" class="btn btn-dark"/>
+	</form>
+
+
+</body>
 </html>
