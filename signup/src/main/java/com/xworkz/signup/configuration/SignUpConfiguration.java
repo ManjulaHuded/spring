@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
@@ -36,7 +38,7 @@ public class SignUpConfiguration {
 	public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean() {
 		log.info("registering LocalContainerEntityManagerFactoryBean");
 		LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
-//		bean.setPackagesToScan("com.xworkz.sahana");
+//		bean.setPackagesToScan("com.xworkz.signup");
 //		bean.setDataSource(dataSource());
 //		bean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		return bean;
@@ -51,4 +53,10 @@ public class SignUpConfiguration {
 //		dataSource.setUsername("root");
 //		return dataSource;
 //	}
+
+	@Bean
+	public PasswordEncoder encoder() {
+		log.info("Registring the PasswordEncoder");
+		return new BCryptPasswordEncoder();
+	}
 }

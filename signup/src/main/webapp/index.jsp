@@ -17,17 +17,15 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-       <nav class="navbar navbar-expand-lg-navbar-Light bg-dark">
-       <div class="container-fluid">
+	<nav class="navbar navbar-expand-lg-navbar-Light bg-dark">
+		<div class="container-fluid">
 			<a class="navbar-brand" href="#"> <img
 				src=" https://x-workz.in/static/media/Logo.cf195593dc1b3f921369.png"
-				alt="" width="80" height="48" class="d-inline-block align text-top">
-				<a href="register">SignUpPage</a>
-				<a class="navbar-brand" href="#"></a> 
-			
-				  
+				alt="" width="100" height="58" class="d-inline-block align text-top">
+				<a href="SignUp.jsp">SignUpPage</a> <a href="SignIn.jsp">SignInPage</a>
+				<a class="navbar-brand" href="#"></a>
 		</div>
-		
+
 	</nav>
 </body>
 </html>

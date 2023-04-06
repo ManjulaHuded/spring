@@ -1,8 +1,6 @@
 package com.xworkz.signup.repository;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -21,21 +19,43 @@ public class SignUpRepositoryImpl implements SignUpRepository {
 
 	@Autowired
 	private EntityManagerFactory entityManagerFactory;
-	
-	
+
 	@Override
 	public boolean save(SignUpEntity entity) {
 		log.info("Running save in repoImpl " + entity);
-		entity.setCreatedBy(entity.getUserId());
-		entity.setCreatedDate(LocalDateTime.now());
 		EntityManager entityManager = this.entityManagerFactory.createEntityManager();
-		EntityTransaction transaction = entityManager.getTransaction();
-		transaction.begin();
-		entityManager.persist(entity); 
-		transaction.commit();
-		entityManager.close();
-		return true;
+		try {
+			EntityTransaction transaction = entityManager.getTransaction();
+
+			transaction.begin();
+			entityManager.persist(entity);
+			transaction.commit();
+			entityManager.close();
+			return true;
+		} finally {
+			entityManager.close();
+		}
 	}
+
+	@Override
+	public SignUpEntity signIn(String userId) {
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			Query query = em.createNamedQuery("userANDpassword");
+			query.setParameter("ui", userId);
+
+			// query.setParameter("pwd", password);
+
+			Object object = query.getSingleResult();
+			SignUpEntity entity = (SignUpEntity) object;
+			log.info("" + entity);
+			return entity;
+		} finally {
+			em.close();
+		}
+
+	}
+
 	@Override
 	public List<SignUpEntity> findAll() {
 		EntityManager em = this.entityManagerFactory.createEntityManager();
@@ -97,4 +117,23 @@ public class SignUpRepositoryImpl implements SignUpRepository {
 			em.close();
 		}
 	}
+
+	@Override
+	public boolean logincount(String userId, int count) {
+		log.info("count : " + count);
+		EntityManager em = this.entityManagerFactory.createEntityManager();
+		try {
+			EntityTransaction et = em.getTransaction();
+			et.begin();
+			Query query = em.createNamedQuery("updateLoginCount");
+			query.setParameter("userId", userId);
+			query.setParameter("count", count);
+			query.executeUpdate();
+			et.commit();
+			return true;
+		} finally {
+			em.close();
+		}
+	}
+
 }

@@ -10,8 +10,12 @@ import com.xworkz.signup.dto.SignUpDTO;
 
 public interface SignUpService {
 
-	Set<ConstraintViolation<SignUpDTO>> validateAndSave(SignUpDTO dto);
-	
+	Set<ConstraintViolation<SignUpDTO>> validateAndSave(SignUpDTO signUpDTO);
+
+	default SignUpDTO signIn(String userId, String password) {
+		return null;
+	}
+
 	default List<SignUpDTO> findAll() {
 		return Collections.emptyList();
 	}
@@ -27,4 +31,7 @@ public interface SignUpService {
 	default Long findByUser(String user) {
 		return null;
 	}
+
+	boolean sendMail(String email);
+
 }

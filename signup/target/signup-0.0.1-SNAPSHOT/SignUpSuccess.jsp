@@ -26,9 +26,9 @@
 				<a href="index.jsp">Home</a> <a class="navbar-brand" href="#">
 		</div>
 	</nav>
+	<div class="container" style="text-align: center;">
 	<h1>Successfully Registered...</h1><br>
 	
 	<h2>UserId : ${dto.userId}</h2> <br>
 	<h2>Email : ${dto.email}</h2>
-</body>
-</html>
+</body
