@@ -12,7 +12,7 @@ public interface SignUpService {
 
 	Set<ConstraintViolation<SignUpDTO>> validateAndSave(SignUpDTO signUpDTO);
 
-	default SignUpDTO signIn(String userId, String password) {
+	default SignUpDTO findByUserIdAndPassword(String userId, String password) {
 		return null;
 	}
 
@@ -33,5 +33,13 @@ public interface SignUpService {
 	}
 
 	boolean sendMail(String email);
+
+	default SignUpDTO reSetPassword(String email) {
+		return null;
+	}
+
+	default SignUpDTO updatePassword(String userId, String password, String confirmPassword) {
+		return null;
+	}
 
 }

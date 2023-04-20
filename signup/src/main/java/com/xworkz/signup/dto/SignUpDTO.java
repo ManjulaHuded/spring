@@ -23,5 +23,9 @@ public class SignUpDTO {
 	@NotBlank
 	@Size(min = 4, max = 12, message  ="password should be greater then 4 and less then 12")
 	private String password;
+	
+	private Boolean reSetPassword;
+	
+	private Integer logincount;
 
 }

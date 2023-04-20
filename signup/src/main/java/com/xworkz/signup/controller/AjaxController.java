@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-
 import com.xworkz.signup.service.SignUpService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +27,7 @@ public class AjaxController {
 
 	@GetMapping(value = "/userName/{user}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String onUser(@PathVariable String user) {
+		log.info("Running onUser in AjaxController" + user);
 		Long dbUser = this.service.findByUser(user);
 		System.err.println(dbUser);
 
@@ -42,6 +42,7 @@ public class AjaxController {
 
 	@GetMapping(value = "/email/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String onEmail(@PathVariable String email) {
+		log.info("Running onEmail in AjaxController" + email);
 		Long dbEmail = this.service.findByEmail(email);
 		System.err.println(dbEmail);
 
@@ -55,6 +56,7 @@ public class AjaxController {
 
 	@GetMapping(value = "/mobile/{number}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public String onMobile(@PathVariable Long number) {
+		log.info("Running onMobile in AjaxController" + number);
 		Long dbNumber = this.service.findByMobile(number);
 		System.err.println(dbNumber);
 
@@ -64,6 +66,19 @@ public class AjaxController {
 
 		} else {
 			return "Mobile Number exsist";
+		}
+	}
+
+	@GetMapping(value = "/reemail/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public String reEmail(@PathVariable String email) {
+		Long dbEmail = this.service.findByEmail(email);
+		System.err.println(dbEmail);
+
+		if (dbEmail == 0) {
+			System.err.println("Running in equals condition");
+			return "Please enter Existing email";
+		} else {
+			return "";
 		}
 	}
 }

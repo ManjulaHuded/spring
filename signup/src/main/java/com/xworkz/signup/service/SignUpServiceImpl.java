@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 import java.util.Set;
-
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -19,7 +19,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,6 +39,9 @@ public class SignUpServiceImpl implements SignUpService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	public String reSetPassword = DefaultPasswordGenerator.generate(6);
+	
 
 	private Set<ConstraintViolation<SignUpDTO>> validate(SignUpDTO signUpDto) {
 		ValidatorFactory validationFactory = Validation.buildDefaultValidatorFactory();
@@ -95,8 +97,8 @@ public class SignUpServiceImpl implements SignUpService {
 	}
 
 	@Override
-	public SignUpDTO signIn(String userId, String password) {
-		SignUpEntity entity = this.repository.signIn(userId);
+	public SignUpDTO findByUserIdAndPassword(String userId, String password) {
+		SignUpEntity entity = this.repository.findByUserId(userId);
 		SignUpDTO dto = new SignUpDTO();
 		BeanUtils.copyProperties(entity, dto);
 		log.info("Matching......" + passwordEncoder.matches(password, entity.getPassword()));
@@ -185,4 +187,62 @@ public class SignUpServiceImpl implements SignUpService {
 		}
 		return true;
 	}
+	
+	@Override
+	public SignUpDTO reSetPassword(String email) {
+		// String reSetPassword = DefaultPasswordGenerator.generate(6);
+		log.info("ReSetd password--" + reSetPassword);
+		SignUpEntity entity = this.repository.reSetPassword(email);
+		if (entity != null) {
+			entity.setPassword(passwordEncoder.encode(reSetPassword));
+			entity.setUpdatedBy("System");
+			entity.setUpdatedDate(LocalDateTime.now());
+			entity.setLoginCount(0);
+			entity.setReSetPassword(true);
+			boolean update = this.repository.update(entity);
+			if(update) {
+				sendMail(entity.getEmail());
+			}
+			log.info("Updated---" + update);
+			SignUpDTO updatedDto = new SignUpDTO();
+			BeanUtils.copyProperties(entity, updatedDto);
+			log.info("updatedDto : "+updatedDto);
+			log.info("Entity : "+entity);
+			return updatedDto;
+		}
+		return SignUpService.super.reSetPassword(email);
+	}
+
+	@Override
+	public SignUpDTO updatePassword(String userId, String password, String confirmPassword) {
+		SignUpEntity entity = new SignUpEntity();
+		if (password.equals(confirmPassword)) {
+//			
+			boolean passwordUpdated = this.repository.updatePassword(userId, passwordEncoder.encode(password), false);
+			log.info("passwordUpdated--" + passwordUpdated);
+		
+		}
+		return SignUpService.super.updatePassword(userId, password, confirmPassword);
+	}
+	
+	public final static class DefaultPasswordGenerator {
+		private static final String[] charCategories = new String[] { "abcdefghijklmnopqrstuvwxyz",
+				"ABCDEFGHIJKLMNOPQRSTUVWXYZ", "0123456789" };
+
+		public static String generate(int length) {
+			StringBuilder password = new StringBuilder(length);
+			Random random = new Random(System.nanoTime());
+
+			for (int i = 0; i < length; i++) {
+				String charCategory = charCategories[random.nextInt(charCategories.length)];
+				int position = random.nextInt(charCategory.length());
+				password.append(charCategory.charAt(position));
+			}
+
+			return new String(password);
+		}
+//		String password = DefaultPasswordGenerator.generate(6);[use this reference to generate the password]
+	}
+		
+
 }

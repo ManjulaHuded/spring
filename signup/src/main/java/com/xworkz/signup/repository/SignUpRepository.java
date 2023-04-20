@@ -9,7 +9,7 @@ public interface SignUpRepository {
 
 	boolean save(SignUpEntity entity);
 
-	default SignUpEntity signIn(String userId) {
+	default SignUpEntity findByUserId(String userId) {
 		return null;
 	}
 
@@ -30,4 +30,13 @@ public interface SignUpRepository {
 	}
 
 	boolean logincount(String userId, int count);
+
+	default SignUpEntity reSetPassword(String email) {
+		return null;
+
+	}
+
+	boolean update(SignUpEntity entity);
+
+	boolean updatePassword(String userId, String password, Boolean resetPassword);
 }

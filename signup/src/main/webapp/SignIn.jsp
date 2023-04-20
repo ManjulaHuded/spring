@@ -56,7 +56,9 @@
 				<button type="submit" class="btn btn-primary">SignIN</button>
 			</div>
 		</form>
-		<a href="SignUp.jsp">Register New User</a>
+		<a href="SignUp.jsp">Register New User</a><br>
+		<a href="ResetPassword.jsp">Forgot Password</a><br>
+		<a href="updatePassword.jsp">Update Password</a><br>
 	</div>
 	<script>
 		function ValideName() {

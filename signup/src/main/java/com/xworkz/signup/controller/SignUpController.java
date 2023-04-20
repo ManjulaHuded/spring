@@ -35,7 +35,8 @@ public class SignUpController {
 	}
 
 	@PostMapping("/register")
-	public String OnSave(SignUpDTO dto, Model model) {
+	public String onSave(SignUpDTO dto, Model model) {
+		log.info("Running onSave in controller" + dto);
 
 		Set<ConstraintViolation<SignUpDTO>> violations = this.service.validateAndSave(dto);
 		if (violations != null && violations.isEmpty()) {
@@ -53,8 +54,10 @@ public class SignUpController {
 
 	@PostMapping("/login")
 	public String signIn(String userId, String password, Model model) {
+		log.info("Running signIn in controller" + userId + password);
+
 		try {
-			SignUpDTO dto = this.service.signIn(userId, password);
+			SignUpDTO dto = this.service.findByUserIdAndPassword(userId, password);
 			if (dto != null) {
 				log.info("User ID and password is matched");
 				model.addAttribute("userId", dto.getUserId());
@@ -66,8 +69,25 @@ public class SignUpController {
 		}
 
 		model.addAttribute("match", "UserID OR Password is not matching");
+
 		return "SignIn";
 
+	}
+
+	@PostMapping("/reset")
+	public String reSetPassword(String email, Model model) {
+		SignUpDTO udto = this.service.reSetPassword(email);
+		if (udto.getReSetPassword() == true) {
+			model.addAttribute("msg", "Password reset sucessful plz login");
+			return "ResetPassword";
+		}
+		return "ResetPassword";
+	}
+
+	@PostMapping("/passwordUpdate")
+	public String upDatePassword(String userId, String password, String confirmPassword) {
+		this.service.updatePassword(userId, password, confirmPassword);
+		return "updatePasswordSuccess";
 	}
 
 }

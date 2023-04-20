@@ -12,15 +12,18 @@ import javax.persistence.Table;
 
 import lombok.Data;
 
-@Data
+
 @Entity
+@Data
 @Table(name ="signup_table")
-@NamedQuery(name = "find",query = "select ent from SignUpEntity ent")
-@NamedQuery(name = "userId",query = "select count(*) from  SignUpEntity ent where ent.userId=:userBy")
-@NamedQuery(name = "emailId",query = "select count(*) from  SignUpEntity ent where ent.email=:emailBy")
-@NamedQuery(name = "mobileId",query = "select count(*) from  SignUpEntity ent where ent.mobile=:mobileBy")
-@NamedQuery(name = "userANDpassword",query = "select ent from SignUpEntity ent where ent.userId=:ui")
-@NamedQuery(name = "updateLoginCount",query = "update SignUpEntity ent set ent.loginCount=:count where ent.userId=:userId")
+@NamedQuery(name = "findAllEntity",query = "select ent from SignUpEntity ent")
+@NamedQuery(name = "findByuserId",query = "select count(*) from  SignUpEntity ent where ent.userId=:userBy")
+@NamedQuery(name = "findByEmailId",query = "select count(*) from  SignUpEntity ent where ent.email=:emailBy")
+@NamedQuery(name = "findByMobileId",query = "select count(*) from  SignUpEntity ent where ent.mobile=:mobileBy")
+@NamedQuery(name = "findByUserIdAndPassword",query = "select ent from SignUpEntity ent where ent.userId=:userIdBy")
+@NamedQuery(name = "findByUpdateLoginCount",query = "update SignUpEntity ent set ent.loginCount=:count where ent.userId=:userId")
+@NamedQuery(name="updatePassword", query = "update SignUpEntity ent set ent.password=:byPassword , ent.reSetPassword=:byResetPassword where ent.userId=:byUserId")
+@NamedQuery(name="emailid",query = "select ent from SignUpEntity ent where ent.email=:ei")
 public class SignUpEntity extends AbstractAuditEntity{
 
 	@Id
@@ -54,4 +57,7 @@ public class SignUpEntity extends AbstractAuditEntity{
 	
 	@Column(name ="logincount")
 	private int loginCount;
+	
+	@Column(name = "resetPassword")
+	private Boolean reSetPassword;
 }
